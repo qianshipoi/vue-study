@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <input type="text" v-model.value='fname'>+
+        <input type="text" v-model.value='lname'>=
+        <input type="text" v-model.value='allname'>
+    </div>
+    <script src="lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                fname:'',
+                lname:'',
+                allname:''
+            },
+            watch:{ //watch 属性会监听 data 中数据的改变
+                'fname':function(newVal, oldVal){ //当 fname 数据发生改变是会触发该方法
+                    console.log(newVal+'------'+oldVal)
+                    this.allname = newVal +'-' + this.lname
+                },
+                'lname':function(newVal, oldVal){ //当 fname 数据发生改变是会触发该方法
+                    console.log(newVal+'------'+oldVal)
+                    this.allname = this.fname+'-' +newVal 
+                }
+            }
+        })
+    </script>
+
+</body>
+</html>

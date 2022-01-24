@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click='flag=!flag'>
+        <transition @before-enter='beforeEnter' @enter = 'enter' @after-enter='afterEnter'>
+           <div v-show='flag' style="width: 15px; height: 15px; border-radius: 50%; background-color: red;"></div>
+        </transition>  
+    </div>
+    
+    <script src="lib/vue.js"></script>
+    <script>
+           
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                flag:false
+            },
+            methods:{
+                beforeEnter(el){
+                    //动画开始前
+                    // el 表示当前 DOM 元素
+                    el.style.transform='translate(0 , 0)'
+                },
+                enter(el,done){
+                    //入场动画结束
+                    el.offsetWidth
+                    el.style.transform='translate( 150px, 400px)';
+                    el.style.transition = 'all 1s ease'
+                    //这里的 done() 是 afterEnter() 的引用
+                    done();
+                },
+                afterEnter(el){
+                    //入场动画结束后
+                    this.flag = !this.flag
+                }
+                
+            }
+
+        })
+    </script>
+</body>
+</html>

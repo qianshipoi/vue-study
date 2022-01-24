@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="./lib/element-ui.css"> -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="./lib/index.css">
+</head>
+
+<body>
+    <div id="app">
+        <el-col :span='12' :offset='6' style='height: 100%;'>
+            <el-card shadow="hover" style='min-height: 90%;'>
+                <template>
+                    <el-tabs v-model="activeName">
+                        <el-tab-pane label="商品列表" name="first">
+                            <el-col :span='24'>
+                                <el-card shadow="hover">
+                                    <el-form label-width="40px">
+                                        <el-form-item label="搜索">
+                                            <el-input v-model="keysearch"></el-input>
+                                        </el-form-item>
+                                    </el-form>
+                                </el-card>
+                            </el-col>
+
+                            <!-- 商品列表 -->
+                            <el-col :span='6' v-for='(item,index) in search(keysearch)' :key='index'>
+                                <el-card shadow="hover">
+                                    <img :src='item.src' class="image">
+                                    <div style="padding: 14px;">
+                                        <span>{{item.name}}</span>
+                                        <div class="bottom clearfix">
+                                            <el-button type="text" class="button" @click='info(item.id)'>详情</el-button>
+                                        </div>
+                                    </div>
+                                </el-card>
+                            </el-col>
+                        </el-tab-pane>
+                        <el-tab-pane label="添加商品" name="add">
+                            <el-col :span='24'>
+                                <add-com></add-com>
+                            </el-col>
+                        </el-tab-pane>
+                        <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
+                        <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane>
+                    </el-tabs>
+                </template>
+            </el-card>
+        </el-col>
+
+        <div v-show='is_show' class="infos_box">
+            <img :src='infos.img' class="infos_img">
+            <div>商品名称:{{infos.name}}</div>
+            <div>库存:{{infos.kucun}}</div>
+            <el-button type='primary' @click='close'>关闭</el-button>
+        </div>
+
+        <div :class='moban_class'>
+
+        </div>
+    </div>
+
+    <template id='addTmp'>
+        <el-card shadow="hover">
+            <el-form v-model='addForm' label-width="80px" :rules="rules"> 
+                <!-- <el-form-item label="商品编号">
+                    <el-input v-model="form.id"></el-input>
+                </el-form-item> -->
+                <el-form-item label="商品名称" prop='name'>
+                    <el-input v-model="addForm.name"></el-input>
+                </el-form-item>
+                <el-form-item label="商品图片" prop='src'>
+                    <el-input  v-model="addForm.src"></el-input>
+                </el-form-item>
+                <el-form-item label="库存" prop='' prop='kucun'>
+                    <el-row type='flex' justify='center'>
+                        <el-button @click=' addForm.kucun = addForm.kucun>0? addForm.kucun-1:0'>-</el-button>
+                        <el-input type='number' min='0' v-model="addForm.kucun" v-model='form.kucun'>
+                        </el-input>
+                        <el-button @click='addForm.kucun += 1'>+</el-button>
+                    </el-row>
+                </el-form-item>
+                <el-form-item class="add_btn">
+                    <el-button type='primary' @click='add'>添加</el-button>
+                    <el-button type='info'>重置</el-button>
+                </el-form-item>
+            </el-form>
+        </el-card>
+    </template>
+
+
+    <script src="./lib/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script>
+
+        var addCom = Vue.extend({
+            template: '#addTmp',
+            data() {
+                return {
+                    addForm: { name: '', id: '', kucun: 0, src: '' },
+                    rules: {
+                        name: [
+                            { required: true, message: '请输入商品名称', trigger: 'blur' },
+                        ],
+                        kucun: [
+                            { type: 'number', message: '库存必须为数值', trigger: 'blur'  }
+                        ],
+                        src:[
+                            { required: true, message: '请输入图片地址', trigger: 'blur' },
+                        ]
+                    }
+                }
+            },
+            methods: {
+                add(){
+                    console.log(this.addForm)
+                }
+            },
+
+
+        })
+
+        var vn = new Vue({
+            el: '#app',
+            data: {
+                list: [
+                    { id: 1, name: "番茄薯片", src: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=1062611392,1663048975&fm=26&gp=0.jpg", kucun: 5 },
+                    { id: 2, name: "浪味仙", src: "https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3960656789,3206917668&fm=26&gp=0.jpg", kucun: 4 },
+                    { id: 3, name: "乐事薯片", src: "https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2544435106,915389423&fm=26&gp=0.jpg", kucun: 4 },
+                    { id: 4, name: "虾条", src: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1540112540,1701052466&fm=26&gp=0.jpg", kucun: 1 },
+                    { id: 5, name: "呀土豆", src: "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3212703868,3833848151&fm=26&gp=0.jpg", kucun: 4 }
+                ],
+                activeName: "first",
+                is_show: false,
+                infos: { img: '', name: '', kucun: '' },
+                moban_class: '',
+                keysearch: ''
+            },
+            methods: {
+                info(id) {
+                    this.moban_class = 'moban'
+                    var infoss = { img: '', name: '', kucun: '' }
+                    this.list.forEach(element => {
+                        if (element.id == id) {
+                            infoss = { img: element.src, name: element.name, kucun: element.kucun }
+                            return;
+                        }
+                    })
+
+                    this.infos = infoss
+                    this.is_show = !this.is_show;
+                },
+                close() {
+                    this.moban_class = ''
+                    this.infos = { img: '', name: '', kucun: '' }
+                    this.is_show = false;
+                },
+                search(keysearch) {
+                    return this.list.filter(item => {
+                        if (item.name.includes(keysearch)) return item;
+                    })
+                }
+            },
+            components: {
+                'addCom': addCom
+            }
+        })
+    </script>
+</body>
+
+</html>

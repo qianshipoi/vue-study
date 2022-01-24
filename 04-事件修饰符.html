@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id='app'>
+        <!-- 点击按钮会冒泡触发所有事件 -->
+        <!-- <div style="height: 300px; background-color: aqua; width: 100%;" @click='divClick'>
+            <button @click='btnClick'>按钮</button>
+        </div> -->
+
+        <!-- .stop 阻止冒泡触发事件 -->
+        <!-- <div style="height: 300px; background-color: aqua; width: 100%;" @click='divClick'>
+            <button @click.stop='btnClick'>按钮</button>
+        </div> -->
+
+        <!-- .prevent 阻止默认事件 -->
+        <!-- <a href="https://www.baidu.com" target="_barek" @click.prevent='linkClick'>百度一下</a> -->
+
+        <!-- .capture 捕获触发事件 会触发当前点击标签内所有标签的事件  -->
+        <!-- <div style="height: 300px; background-color: aqua; width: 100%;" @click.capture='divClick'>
+            <button type="button" @click='btnClick'>按钮</button>
+        </div> -->
+        
+        <!-- .self 只有点击元素本身才会触发事件 只阻止自己身上的冒泡行为，并不会阻止整个冒泡行为 -->
+        <!-- <div style="height: 300px; background-color: aqua; width: 100%;" @click.self='divClick'>
+            <button type="button" @click='btnClick'>按钮</button>
+        </div> -->
+        
+        <!-- .once 只触发一次  -->
+        <button type="button" @click.once='btnClick'>按钮</button>
+
+    </div>
+
+
+    <script src="lib/vue.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+             
+            },
+            methods:{
+                divClick(){
+                    console.log('触发了div点击事件')
+                },
+                btnClick(){
+                    console.log('触发了btn点击事件')
+                },
+                linkClick(){
+                    console.log('触发了link点击事件')
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+
+        <label for=""> 编号
+            <input type="text" v-model='id'>
+        </label>
+        <label for=""> 姓名
+            <input type="text" v-model='name'>
+        </label>
+        <input type="button" value="添加" @click='add'> 
+        <label for=""> 搜索
+            <input type="text" v-model='keysearch'>
+        </label>
+
+
+
+       <table width='800' heigth='600' border="1">
+           <thead>
+               <tr>
+                   <th>Id</th>
+                   <th>Title</th>
+                   <th>cTime</th>
+                   <th>操作</th>
+               </tr>
+           </thead>
+           <tbody>
+               <tr v-for='item in search(keysearch)' :key='item.id'>
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.ctime | dateFormat}}</td>
+                <td><a href="javascript:;" @click.prevent='del(item.id)'>删除</a></td>
+               </tr>
+           </tbody>
+       </table>
+    </div>
+    <div id="app2">
+        
+       <h1>{{msg | dateFormat}}</h1>
+    </div>
+
+    <script src="lib/vue.js"></script>
+    <script>
+
+        Vue.filter('dateFormat',function(datestr){
+            var time = new Date(datestr)
+            var y = time.getFullYear();
+            var m = time.getMonth()+1;
+            var d = time.getDate();
+            return y+'-'+m+'-'+d;
+        })
+
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                list:[
+                    {id:1,name:'奔驰',ctime:new Date()},
+                    {id:2,name:'宝马',ctime:new Date()},
+                    {id:3,name:'奥迪',ctime:new Date()},
+                ],
+                id:'',
+                name:'',
+                keysearch:''
+            },
+            methods:{
+                add(){
+                    if(this.id=='' || this.name=='') return;
+                    this.list.push({id:this.id,name:this.name,ctime:new Date()});
+                    this.id = this.name = '';
+                },
+                del(id){
+                    // findIndex 根据内容查找索引
+                    var index = this.list.findIndex(item=>{
+                        //如果找到直接return
+                        if (item.id == id)return true;
+                    })
+                    // splice('索引','删除条数') 删除数组中的指定数据
+                    this.list.splice(index,1)
+                },
+                search(keysearch){
+                    // var newList = []
+                    // // forEcah 循环数组
+                    // this.list.forEach(item => {
+                    //     if(item.name.indexOf(keysearch) != -1) newList.push(item)
+                    // });
+                    // return newList;
+                    return this.list.filter(item=>{
+                        // includes('要包含的字符串')   包含返回true 否则返回false
+                        if(item.name.includes(keysearch)) return item;
+                    })
+                }
+            }
+
+        })
+    
+        var vm2 = new Vue({
+            el:'#app2',
+            data:{msg:new Date()},
+            filters:{
+                dateFormat:function(datestr){
+                    var time = new Date(datestr)
+                    var y = time.getFullYear();
+                    var m = (time.getMonth()+1).toString().padStart(2,'0'); //ES6字符串新方法：padStart(最长长度,'填充内容')
+                    var d = time.getDate().toString().padStart(2,'0');
+                    var hh = time.getHours().toString().padStart(2,'0');
+                    var mm = time.getMinutes().toString().padStart(2,'0');
+                    var ss = time.getSeconds().toString().padStart(2,'0');
+                    return y+'-'+m+'-'+d+' '+hh+':'+mm+':'+ss;
+                }
+            }
+        })
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <h3 id="test" ref='reftest'>测试测试测试</h3>
+        <input type="button" value="获取DOM元素内容" @click='getContent'>
+        <login  ref='reflogin'></login>
+    </div>
+
+
+    <template id='login'>
+        <h2>组件</h2>
+    </template>
+    <script src="lib/vue.js"></script>
+    <script>
+        var login = {
+            template:'#login',
+            data(){
+                return{
+                    msg:'这是组件的msg'
+                }
+            },
+            methods:{
+                show(){
+                    console.log('这是组件的show方法')
+                }
+            }
+        }
+        var vm = new Vue({
+            el:'#app',
+            data:{
+
+            },
+            methods:{
+                getContent(){
+                    console.log("操作DOM元素获取："+document.getElementById('test').innerText);
+                    console.log("ref获取："+this.$refs.reftest.innerText);
+                    // 获取组件对象
+                    var lg = this.$refs.reflogin.msg;
+                    console.log(lg)
+                    this.$refs.reflogin.show()
+                }
+            },
+            components:{
+                login
+            }
+        })
+    </script>
+</body>
+</html>

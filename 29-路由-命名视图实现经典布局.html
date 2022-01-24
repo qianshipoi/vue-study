@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-view></router-view>
+        <!-- name 指定显示哪个组件 -->
+        <router-view name='left'></router-view>
+        <router-view name='main'></router-view>
+
+    </div>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-router.js"></script>
+    <script>
+        var header = {
+            template:'<h1>header区域</h1>'
+        }
+        var leftbox = {
+            template:'<h1>leftbox区域</h1>'
+        }
+        var mainbox = {
+            template:'<h1>mainbox区域</h1>'
+        }
+        var router = new VueRouter({
+            routes:[
+                {path:'/',components:{ //components 指定多个组件
+                    'default':header,
+                    'left':leftbox,
+                    'main':mainbox
+                }}
+            ]
+        })
+        var vm = new Vue({
+            el:'#app',
+            router:router
+        })
+    </script>
+</body>
+</html>         

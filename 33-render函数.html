@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+    </div>
+    <script src="lib/vue.js"></script>
+    <script>
+        var login = {
+            template:'<h1>登录组件</h1>'
+        }
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{},
+            filter:{},
+            directives:{},
+            components:{},
+            // router:''
+            render:function(createElements){    //createElements是一个方法，调用它能够把指定模板渲染到 el 上。
+               return createElements(login)
+            },
+            beforeCreate(){},
+            created(){},
+            beforeMount(){},
+            mountes(){},
+            beforeUpdate(){},
+            updated(){}
+        })
+    </script>
+</body>
+</html>

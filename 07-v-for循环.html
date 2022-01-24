@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 循环数组 -->
+        <!-- <p v-for='item in arr'>{{item}}</p>
+        <p v-for='(item , index) in arr'>值：{{item}}---索引：{{index}}</p> -->
+
+        <!-- 循环数组对象 -->
+        <!-- <p v-for='(user , index) in arr2'>name：{{user.name}}---age:{{user.age}}---索引：{{index}}</p> -->
+        
+        <!-- 循环对象 -->
+        <!-- <p v-for='(proitem , key, index) in pro'>{{proitem}}--key：{{key}}---索引：{{index}}</p> -->
+        
+        <!-- 迭代数字 -->
+        <!-- <p v-for='count in 10'>{{count}}</p> -->
+
+        <!-- :key的使用 -->
+        <label>Name:
+            <input type="text" v-model='name'>
+        </label>
+        <label>Age:
+            <input type="text" v-model='age'>
+        </label>
+        <label>
+            <input type="button" @click='add' value='添加'>
+        </label>
+
+        <p v-for='item in arr2' :key='item.age'>
+            <input type="checkbox">
+            {{item.name}}---{{item.age}}
+        </p>
+
+    </div>
+    
+
+    <script src="lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                arr:[1,2,3,4,5,6],
+                arr2:[
+                    {name:'zhangsan',age:18},
+                    {name:'lisi',age:64},
+                    {name:'wangwu',age:23},
+                    {name:'zhaoliu',age:34}
+                ],
+                pro:{
+                    name:'zangsan',id:2,age:34
+                },
+                name:'',
+                age:'',
+            },
+            methods:{
+              add(){
+                  this.arr2.unshift({name:this.name,age:this.age});
+              }
+            }
+
+        })
+    </script>
+</body>
+</html>

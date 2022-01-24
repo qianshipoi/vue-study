@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .colorRed{
+            color: red;
+        }
+        .thin{
+            font-weight: 200;
+        }
+        .italic{
+            font-style: italic;
+        }
+        .active{
+            letter-spacing: 0.5em;
+        }
+        
+    </style>
+
+</head>
+<body>
+    <div id="app">
+        <!-- 传统class绑定 -->
+        <H1 class="colorRed thin italic">传统class绑定</H1>
+
+        <!-- vue 使用数组绑定class -->
+        <H1 :class="['colorRed','thin','active']">vue 使用数组绑定class</H1>
+        <!-- vue 数组嵌套三元表达式 -->
+        <H1 :class="['colorRed','thin', flag?'active':'']">vue 数组嵌套三元表达式</H1>
+        <!-- vue 数组嵌套对象 -->
+        <H1 :class="['colorRed','thin', {'active':flag}]">vue 数组嵌套对象</H1>
+        <!-- vue 直接使用对象 -->
+        <H1 :class="classTset">vue 直接使用对象</H1>
+
+        <!-- style内联样式绑定 -->
+        <h1 :style="{color:'red','font-size':'22px'}">style内联样式绑定</h1>
+        <!-- style内联样式绑定 -->
+        <h1 :style="styleTest">style内联样式绑定</h1>
+        <!-- style内联样式绑定 -->
+        <h1 :style="[styleTest,styleTest2]">同时绑定多个对象</h1>
+
+    </div>
+    
+
+    <script src="lib/vue.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+             flag:false,
+             classTset:{colorRed:false,thin:true,active:false,italic:true},
+             styleTest:{color:'green','font-size':'30px'},
+             styleTest2:{'font-style':'italic'}
+            },
+            methods:{
+              
+            }
+
+        })
+    </script>
+</body>
+</html>

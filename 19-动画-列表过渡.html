@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        li{
+            border: 1px solid gray;
+            font-size: 12px;
+            line-height: 36px;
+            margin-top: 20px;
+            width: 100%;
+        }
+        li:hover{
+            background-color:skyblue;
+            transition: all 0.5s ease;
+        }
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateY(200px);
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.5s ease;
+        }
+        .v-move{
+            transition: all 1s ease;
+        }
+        .v-leave-active{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="app">
+        <label for="">编号
+            <input type="text" v-model='id' @keyup.enter='add()'>
+        </label>
+        <label for="">姓名
+            <input type="text" v-model='name' @keyup.enter='add()'>
+        </label>
+            <transition-group appear tag='ul'>
+                <li v-for='(item ,index) in list' :key='item.id' @click='del(index)'>{{item.id}}---{{item.name}}</li>
+            </transition-group>
+    </div>
+
+    <script src="lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                list:[
+                    {id:1,name:'张三'},
+                    {id:2,name:'李四'},
+                    {id:3,name:'王五'},
+                    {id:4,name:'赵六'},
+                    {id:5,name:'田七'}
+                ],
+                id:'',
+                name:''
+            },
+            methods:{
+                add(){
+                    if (this.id=='' || this.name == '')
+                        return
+                    this.list.push({id:this.id,name:this.name})
+                    this.id = this.name = ''
+                },
+                del(i){
+                    this.list.splice(i,1)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

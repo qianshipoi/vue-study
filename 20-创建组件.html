@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id='app'>
+        <my-com1></my-com1>
+        <mycom2></mycom2>
+        <mycom3></mycom3>
+    </div>
+    <div id='app2'>
+        <mycom4></mycom4>
+        <com11></com11>
+    </div>
+
+    <template id="temp">
+        <h1>这是使用 template 元素创建的组件</h1>
+    </template>
+
+    <script src="lib/vue.js"></script>
+    <script>
+
+        // //创建全局组件
+        // var com1 = Vue.extend({
+        //     template:'<h1>这是一个使用 Vue.extend 创建的组件</h1>'
+        // })
+        // //  Vue.component('组件名称', 组件模板对象)    
+        // Vue.component('myCom1',com1)    
+
+        //去除中间变量
+        Vue.component('myCom1',Vue.extend({
+            template:'<h1>这是一个使用 Vue.extend 创建的组件</h1>'
+        }))    
+        //简写
+        Vue.component('mycom2',{
+            template:'<div><h1>这是一个使用 Vue.component 创建的组件</h1><span>（简写形式）</span></div>'
+        }) 
+        //给 template 元素添加id属性，根据id创建模板
+        Vue.component('mycom3',{
+            template:'#temp'
+        }) 
+        var com11 = Vue.extend({
+            template:'<h1>测试</h1>'
+        })
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{}
+        })
+        var vm2 = new Vue({
+            el:'#app2',
+            data:{},
+            methods:{},
+            components:{
+                'mycom4':{template:'<h1>私有组件</h1>'},
+                com11
+            }
+        })
+    </script>
+</body>
+</html>

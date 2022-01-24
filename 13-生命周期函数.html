@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+        <input type="button" @click="msg='no'" value="修改msg">
+        <h1 id="test">{{ msg }}</h1>
+    </div>
+
+    <script src="lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{msg:'ok'},
+            methods:{show(){console.log('执行了show方法')}},
+            beforeCreate(){ console.log(this.msg) },
+            created(){ console.log(this.msg);this.show()},
+            beforeMount(){console.log(document.getElementById('test').innerText)},
+            mounted(){console.log(document.getElementById('test').innerText)},
+            beforeUpdate(){console.log('页面中的msg：'+document.getElementById('test').innerText+' / data中的msg:'+this.msg)},
+            updated(){console.log('页面中的msg：'+document.getElementById('test').innerText+' / data中的msg:'+this.msg)}
+        })
+    </script>
+</body>
+</html>

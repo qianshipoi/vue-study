@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" value="enter" @keyup.enter='enter()'>
+        <input type="text" value="f2" @keyup.113='f2()'>
+        <input type="text" value="f2自定义按键修饰符" @keyup.f2='f2()'>
+    </div>
+    
+
+    <script src="lib/vue.js"></script>
+    <script>
+
+        //自定义全局按键修饰符
+        Vue.config.keyCodes.f2=113
+
+        var vm = new Vue({
+            el:'#app',
+            data:{
+            },
+            methods:{
+              enter(){
+                  alert('你敲击了enter键')
+              },
+              f2(){
+                  alert('你敲击了f2')
+              }
+            }
+        })
+    </script>
+</body>
+</html>

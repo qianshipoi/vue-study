@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        /* router-link 激活高亮显示 */
+        .router-link-active{
+            color: red;
+            font-size: 30px;
+            font-style: italic;
+        }
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform:translateX(150px);
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <router-link to='/login' tag='span'>登录</router-link>
+        <router-link to='/reg'>注册</router-link>
+        <transition mode='out-in'>
+            <router-view></router-view>
+        </transition>
+    </div>
+
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-router.js"></script>
+    <script>
+        var login = {
+            template:'<h1>登录组件</h1>'
+        }
+        var reg = {
+            template:'<h1>注册组件</h1>'
+        }
+        var routerObj = new VueRouter({
+            routes:[
+                {path:'/login',component:login},
+                {path:'/reg',component:reg},
+                {path:'/',redirect:'/login'}
+            ],
+        })
+        var vm = new Vue({
+            el:'#app',
+            router: routerObj,
+            watch:{
+                '$route.path':function(newVal,oldVal){
+                    console.log(newVal+'---'+oldVal)
+                }
+            }
+        })
+    </script>
+</body>
+</html>

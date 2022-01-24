@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+
+        /* 通过定义class类来定义动画 */
+        /* v-enter 进入动画之前 元素的起始状态 此时还未进入动画
+           v-leave 离开动画之后 元素最终的状态 此时动画已经结束 */
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            /* translateX ：向 X 轴位移 */
+            transform: translateX(200px);  
+        }
+        /* v-enter-active 入场动画这个时间段
+           v-leave-active 立场动画这个时间段 */
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 1s ease;
+        }
+
+        .my-enter,
+        .my-leave-to{
+            opacity: 0;
+            transform: translatey(200px);  
+        }
+        .my-enter-active,
+        .my-leave-active{
+            transition: all 1s ease;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="toggle" @click='flag=!flag'>
+        <transition>
+            <h1 v-show='flag' v-cloak>H1H1H1H1</h1>
+        </transition>  
+        <hr style="height: 5px; background-color: aqua;">
+        <input type="button" value="toggle2" @click='flag2=!flag2'>
+        <!-- transiton Vue提供的元素 通过定义class类来实现动画效果 
+            默认类名为 v- 开头 可使用 name 属性修改类名。
+        -->
+        <transition name='my'>
+            <h1 v-show='flag2' v-cloak>H1H1H1H1</h1>
+        </transition> 
+    </div>
+    
+    <script src="lib/vue.js"></script>
+    <script>
+        
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                flag:false,
+                flag2:false
+            },
+            methods:{
+            
+            }
+
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-focus v-color="'red'" v-font-size="'30px'">
+
+    </div>
+
+    <script src="lib/vue.js"></script>
+    <script>
+
+        //自定义全局指令
+        Vue.directive('focus',{
+            bind:function(el){  //当指令绑定到元素上是触发该函数
+
+            },
+            inserted:function(el){  //当元素插入到dom中时触发该函数
+                el.focus();
+            },
+            updated:function(){ //当VNode更新时会触发当前函数，能触发多次
+               
+            }
+        })
+
+        var vm = new Vue({
+            el:'#app',
+            data:{},
+            methods:{},
+            directives:{
+                color:{
+                    bind(el,binding){
+                        console.log(binding.name);  //获取该指令名称
+                        console.log(binding.value);     //获取该指令值 计算后的
+                        console.log(binding.expression);    //获取该指令的值 原样返回
+                        el.style.color = binding.value;
+                    }
+                },
+                'font-size':function(el, binding){    //函数简写 当只用到 bind 和 update 时可以使用简写
+                    el.style.fontSize = parseInt(binding.value) +'px'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

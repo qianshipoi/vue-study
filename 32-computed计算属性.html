@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <input type="text" v-model.value='fname'>+
+        <input type="text" v-model.value='lname'>=
+        <input type="text" v-model.value='allname'>
+
+        <p>{{allname}}</p>
+        <p>{{allname}}</p>
+        <p>{{allname}}</p>
+    </div>
+    <script src="lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                fname: '',
+                lname: ''
+            },
+            computed: {
+                'allname': function () {
+                    console.log('ok')
+                    //计算属性 监听需要计算的数据 如果数据改变则 触发该事件 
+                    //在调用的当做属性 不要在最后加 '()'
+                    //计算属性会对求职的结果进行缓存
+                    return this.fname + '-' + this.lname
+
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

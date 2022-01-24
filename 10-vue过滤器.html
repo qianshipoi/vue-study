@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <p>{{msg | msgFormat('***','(口吐芬芳)') | test}}</p>
+    </div>
+    
+    <div id="app2">
+        <p>{{msg | app2filter('***')}}</p>
+    </div>
+    
+
+    <script src="lib/vue.js"></script>
+
+    <script>
+
+        //定义全局过滤器
+        Vue.filter('msgFormat',function(data,arg,arg2){
+            return data.replace(/过滤器/g,arg+arg2)
+        })
+        Vue.filter('test',function(data){
+            return data +'======'
+        })
+
+        var vm = new Vue({
+            el:'#app',
+            data:{
+              msg:'这是一个过滤器，过滤器能传递参数，过滤器会在绑定值之前调用！'
+            },
+            methods:{
+              
+            }
+        })
+
+        var vm2 = new Vue({
+            el:'#app2',
+            data:{
+                msg:'这是一个过滤器，过滤器能传递参数，过滤器会在绑定值之前调用！'
+            },
+            methods:{},
+            filters:{   //定义私有（局部）过滤器
+                app2filter:function(data,arg){
+                    return data + arg;
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

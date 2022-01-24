@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div id="app">
+
+        <input type="button" value="toggle" @click='flag=!flag'>
+
+        <!-- v-if 切换会删除dom元素 -->
+        <p v-if='flag'>v-if渲染</p>
+        <!-- v-show 切换会隐藏dom元素 -->
+        <p v-show='flag'>v-show渲染</p>
+
+    </div>
+
+    <script src="lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{
+               flag:true
+            },
+            methods:{
+            }
+
+        })
+    </script>
+</body>
+</html>

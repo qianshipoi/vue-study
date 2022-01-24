@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="lib/bootstrap.css">
+</head>
+<body>
+    
+    <div id="app">
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>教室编号</th>
+                <th>教室名称</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>最大人数</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for='(item,index) in list' :key='index'>
+                <td v-text='item.TC_ID'></td>
+                <td v-text='item.TC_Name'></td>
+                <td v-text='item.TC_BeginTime'></td>
+                <td v-text='item.TC_EndTime'></td>
+                <td v-text='item.TC_MaxAmount'></td>
+                <td><a href="javascript:;">删除</a></td>
+            </tr>
+        </tbody>
+    </table>
+        
+</div>
+
+    <script src="lib/vue.js"></script>
+    <script src="lib/vue-resource.js"></script>
+    <script>
+        
+        var vm = new Vue({
+            el:"#app",
+            data:{list:[]},
+            methods:{
+                getlist(){
+                    this.$http.get('http://localhost:2013/api/TrainClasses/GetTrainClassesInfo').then(result=>{
+                        this.list = result.body
+                        console.log(result)
+                    })
+                }
+            },
+            created(){
+                this.getlist();
+            }
+
+        })
+    </script>
+</body>
+</html>

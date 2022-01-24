@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 绑定属性值 绑定方法 -->
+        <com1 v-bind:prmsg='msg' v-on:func='show'></com1>
+    </div>
+
+    <template id="tmp1"> 
+        <div>
+        <h1>子组件---{{prmsg}}</h1>
+        <input type="button" value="点击调用父组件show方法" @click='myClick'>
+    </div>
+    </template> 
+
+    <script src="lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el:'#app',
+            data:{msg:'父组件上的msg'},
+            methods:{
+                show(data,data2){
+                    console.log("调用了父组件的show方法"+data+data2)
+                }
+            },
+            components:{
+                com1:{
+                    template:'#tmp1',
+                    // 父组件中的值想要在子组件调用，必须在 props 中定义。
+                    props:['prmsg'],
+                    methods:{
+                        myClick(){
+                            //$emit 调用组件上绑定的事件 ('绑定事件名',参数...)
+                            this.$emit('func',123,456)
+                        } 
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

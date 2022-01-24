@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id='app'>
+
+        <p v-cloak>{{msg}}</p>
+        <!-- v-cloak解决网络差闪烁问题 -->
+        <p v-text='msg'></p>
+        <!-- v-text没有闪烁问题 但会清空标签中的值 -->
+        
+
+        <div>{{msg2}}</div>
+        <div v-text='msg2'></div>
+        <div v-html='msg2'></div>
+        <!-- v-html渲染标签-->
+
+        <input type="button" v-bind:title='myTitle+"abc"' value="测试">
+        <input type="button" :title='myTitle+"abc"' value="测试">
+        <!-- v-bind:属性名 绑定属性的指令 可以写合法的js表达式
+            :属性名 v-bind: 的简写形式-->
+
+        <input type="button" value="按钮" v-on:click='show'>
+        <!-- v-on:事件名='方法名' 绑定事件 缩写 @ -->
+
+
+    </div>
+
+    <script src="lib/vue.js"></script>
+    <script>
+        
+        var vm = new Vue({
+            el:'#app',
+            data:{
+                msg:'123',
+                msg2:'<h1>1111</h1>',
+                myTitle:'title111111111'
+            },
+            methods:{
+                show:function(){
+                    alert("holle");
+                }
+
+            }
+            
+
+        })
+
+    </script>
+</body>
+</html>

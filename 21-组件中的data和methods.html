@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <mycom1></mycom1>
+        <hr>
+        <mycom1></mycom1>
+        <hr>
+        <mycom1></mycom1>
+        <hr>
+        <mycom1></mycom1>
+    </div>
+
+    <template id='tmp1'>
+        <div>
+            <h1>{{count}}</h1>
+            <input type="button" value="+1" @click='addone()'>
+        </div>
+    </template>
+
+    <script src="lib/vue.js"></script>
+    <script>
+        var vm = new  Vue({
+            el:'#app',
+            data:{},
+            methods:{},
+            filters:{},
+            directives:{},
+            components:{
+                'mycom1':{
+                    template:'#tmp1',
+                    data:function(){    
+                        //组件可以有data数据，组件中的data是一个方法，还必须返回对象，组件中data的使用方式根实例中data的使用方式相同。
+                        return {msg:'这是组件中的data',count:0}
+                    },
+                    methods:{
+                        addone(){
+                            this.count++
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

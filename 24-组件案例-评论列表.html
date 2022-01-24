@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="lib/element-ui.css">
+</head>
+<body>
+    <div id="app">
+        <el-container>
+            <com1 @pradata='getList'></com1>
+            <el-table style="width: 100%; display: block;"   :data='list'>
+                <el-table-column prop='name' label='姓名'></el-table-column>
+                <el-table-column prop='content' label='内容'></el-table-column>
+                <el-table-column prop='id' label='时间'></el-table-column>
+            </el-table>
+        </el-container>
+
+    </div>    
+
+    <template id="tmp1">
+            <el-form ref='form' lable-width='80px' style="height: 300px;">
+            <el-form-item label='姓名'>
+                <el-input placeholder="请输入姓名" v-model='name' clearable></el-input>
+            </el-form-item>
+            <el-form-item label='评论内容'>
+                <el-input type='textarea' :rows="2" v-model='content'></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type='primary' @click='postContent'>发射评论</el-button>
+            </el-form-item>
+        </el-form>
+    </template>
+    <script src="lib/vue.js"></script>
+    <script src="lib/element-js.js"></script>
+    <script>
+        
+        var com1 = Vue.extend({
+            template:'#tmp1',
+            data(){
+                return{
+                    name:'',
+                    content:''
+                }
+            },
+            methods:{
+                postContent(){
+                    if (this.name =='' || this.content == '') {
+                        return
+                    }
+                    var obj = {id:Date.now(),name:this.name,content:this.content}
+                    var list = JSON.parse(localStorage.getItem('cmts')||'[]')   //将 localStorage 中的数据取出
+                    list.unshift(obj)   //将新数据插入list
+                    localStorage.setItem('cmts',JSON.stringify(list))   //将数据重新存入 localStorage
+                    this.name = this.content = ''
+                    this.$emit('pradata')
+                }
+            }
+        })
+       
+        var vm = new  Vue({
+            el:'#app',
+            data:{
+                list:[
+                    {id:Date.now(),name:'张三',content:'11111111'},
+                    {id:Date.now(),name:'李四',content:'22222222'},
+                    {id:Date.now(),name:'王五',content:'33333333'}
+                ],
+                currName:'',
+                currContent:''
+            },
+            //函数
+            methods:{
+                getCurrdata(value){
+                    this.list.push(value);
+                },
+                getList(){
+                    //从 localStorage 中加载数据
+                    this.list = JSON.parse(localStorage.getItem('cmts')||'[]') 
+                }
+            },
+            //过滤器
+            filters:{},
+            //自定义指令
+            directives:{},
+            //组件
+            components:{
+                com1
+            },
+
+            //生命周期函数
+            beforeCreate(){},
+            created(){this.getList()},
+            beforeMount(){},
+            mountes(){},
+            beforeUpdate(){this.getList()},
+            updated(){},
+            beforeDestroy(){},
+            destroyed(){}
+        })
+    </script>
+</body>
+</html>
